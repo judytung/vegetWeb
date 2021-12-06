@@ -1,4 +1,4 @@
-import "./style.scss";
+import css from "./style.scss";
 import axios from "axios" ;
 // 抓取 API 資料，渲染畫面
 const url = "https://hexschool.github.io/js-filter-data/data.json";
