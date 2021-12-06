@@ -8,7 +8,7 @@ let data = [];
 function getData () {
     axios.get(url).then(function (response) {
         data = response.data;
-        // renderData();
+        renderData(data);
     });
 }
 getData();
@@ -70,5 +70,30 @@ function changeType (type) {
         }
     });
     renderData(filterData);
-}
+};
 
+// 搜尋資料
+const searchGroup = document.querySelector('.search-group');
+
+searchGroup.addEventListener('click', function (e) {
+    const inputSearch = document.getElementById('crop');
+    // 透過 if 判斷是否點擊到按鈕
+    if (e.target.nodeName === 'BUTTON') {
+        // 用 trim 濾掉空白字串，若為空白就中斷函式
+        if (inputSearch.value.trim() === '') {
+            alert('請輸入想要知道的作物唷！')
+            return;
+        }
+        let filterData = [];
+        // 利用 filter 跟 match 來篩選資料
+        filterData = data.filter((item) => {
+            return (item.作物名稱 && item.作物名稱.match(inputSearch.value.trim()));
+        });
+        // 若找不到資料（也就是篩選後資料長度為 0 ，就顯示找不到
+        if (filterData.length == 0) {
+            showList.innerHTML = `<tr><td colspan="6" class="text-center p-3">查詢不到交易資訊QQ</td></tr>`;
+        } else {
+            renderData(filterData);
+        }
+    }
+});
