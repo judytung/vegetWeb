@@ -87,6 +87,7 @@ searchGroup.addEventListener('click', function (e) {
         let filterData = [];
         // 利用 filter 跟 match 來篩選資料
         filterData = data.filter((item) => {
+            // 因為作物名稱裡面有 null 型別，所以只有寫 item.作物名稱.match (inputSearch.value)的話會出現錯誤
             return (item.作物名稱 && item.作物名稱.match(inputSearch.value.trim()));
         });
         // 若找不到資料（也就是篩選後資料長度為 0 ，就顯示找不到
@@ -97,3 +98,55 @@ searchGroup.addEventListener('click', function (e) {
         }
     }
 });
+
+// 下拉式選單 排序資料
+const select = document.querySelector('.sort-select');
+// 監聽 select 的 change 事件
+select.addEventListener('change', function (e) {
+    // 使用 switch 來判斷
+    switch (e.target.value) {
+      case "依上價排序":
+        selectChange('上價')
+        break;
+      case "依中價排序":
+        selectChange('中價')
+        break;
+      case "依下價排序":
+        selectChange('下價')
+        break;
+      case "依平均價排序":
+        selectChange('平均價')
+        break;
+      case "依交易量排序":
+        selectChange('交易量')
+        break;
+    };
+    function selectChange (value) {
+        data.sort(function (a,b) {
+            return a[value] - b[value];
+        });
+        renderData(data);
+    }
+});
+
+// 透過上下箭頭切換去排序資料
+
+const sortAdvanced = document.querySelector('.js-sort-advanced');
+sortAdvanced.addEventListener('click', function (e) {
+    if (e.target.nodeName === 'I') {
+        const sortPrice = e.target.dataset.price;
+        const sortCaret = e.target.dataset.sort;
+        if (sortCaret === 'up') {
+            data.sort(function (a,b) {
+                return b[sortPrice] - a[sortPrice];
+                // b - a 可實現從大排到小
+            });
+        } else {
+            data.sort(function (a,b) {
+                return a[sortPrice] - b[sortPrice];
+                // a -  b 可實現從小排到大
+            });
+        }
+        renderData(data);
+    }
+})
