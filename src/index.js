@@ -37,12 +37,11 @@ function renderData (showData) {
 // 種類篩選，在 button 裡有埋 data-type
 // 監聽三個按鈕的大區塊
 const buttonGroup = document.querySelector(".button-group");
-
+// 宣告這三個按鈕的節點，tabs 為類陣列
+let tabs = document.querySelectorAll('.button-group button');
 buttonGroup.addEventListener('click',function (e) {
     // 透過 if 判斷式判斷是否點到按鈕
     if (e.target.nodeName === 'BUTTON') {
-        // 宣告這三個按鈕的節點，tabs 為類陣列
-        let tabs = document.querySelectorAll('.button-group button');
         // 利用回圈拿掉按鈕的 active 樣式
         tabs.forEach((item) => {
             item.classList.remove('active');
@@ -92,6 +91,10 @@ searchGroup.addEventListener('click', function (e) {
         let filterData = [];
         // 利用 filter 跟 match 來篩選資料
         filterData = data.filter((item) => {
+            // 搜尋後清除 active 狀態
+            tabs.forEach((item) => {
+                item.classList.remove('active');
+            });
             // 因為作物名稱裡面有 null 型別，所以只有寫 item.作物名稱.match (inputSearch.value)的話會出現錯誤
             return (item.作物名稱 && item.作物名稱.match(inputSearch.value.trim()));
         });
@@ -101,7 +104,8 @@ searchGroup.addEventListener('click', function (e) {
         } else {
             renderData(filterData);
         }
-    }
+    };
+    
 });
 
 // 下拉式選單 排序資料
