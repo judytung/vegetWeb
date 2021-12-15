@@ -7,10 +7,10 @@ let data = [];
 
 function getData () {
     axios.get(url).then(function (response) {
-        data = response.data.filter((item) => {
-            if (item.作物名稱 !== null ) {
+        data = response.data.filter(item => {
+            if (item.作物名稱 !== null && item.作物名稱 !== '' ) {
                 return item;
-            } 
+            }
         });
         renderData(data);
     });
