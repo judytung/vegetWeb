@@ -78,7 +78,7 @@ function changeType (type) {
 
 // 搜尋資料
 const searchGroup = document.querySelector('.search-group');
-
+const cropName = document.getElementById('js-crop-name');
 searchGroup.addEventListener('click', function (e) {
     const inputSearch = document.getElementById('crop');
     // 透過 if 判斷是否點擊到按鈕
@@ -95,6 +95,7 @@ searchGroup.addEventListener('click', function (e) {
             tabs.forEach((item) => {
                 item.classList.remove('active');
             });
+            cropName.textContent = `查看『 ${inputSearch.value} 』的比價結果`
             // 因為作物名稱裡面有 null 型別，所以只有寫 item.作物名稱.match (inputSearch.value)的話會出現錯誤
             return (item.作物名稱 && item.作物名稱.match(inputSearch.value.trim()));
         });
