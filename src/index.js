@@ -51,7 +51,6 @@ buttonGroup.addEventListener('click',function (e) {
         // 用 if 判斷式去判斷是 N04、N05、N06 哪一個，並在裡面用 filter 篩選資料再渲染出來
         // let filterData = [];
         if (type === 'N04') {
-            // 宣告一個空陣列來存放篩選出來的資料
             changeType(type);
             e.target.classList.add('active');
         } else if (type === 'N05') {
@@ -79,8 +78,8 @@ function changeType (type) {
 // 搜尋資料
 const searchGroup = document.querySelector('.search-group');
 const cropName = document.getElementById('js-crop-name');
-searchGroup.addEventListener('click', function (e) {
-    const inputSearch = document.getElementById('crop');
+const inputSearch = document.getElementById('crop');
+searchGroup.addEventListener('click', function (e) { 
     // 透過 if 判斷是否點擊到按鈕
     if (e.target.nodeName === 'BUTTON') {
         // 用 trim 濾掉空白字串，若為空白就中斷函式
@@ -106,13 +105,13 @@ searchGroup.addEventListener('click', function (e) {
             renderData(filterData);
         }
     };
-    
 });
 
 // 下拉式選單 排序資料
 const select = document.querySelector('.sort-select');
 // 監聽 select 的 change 事件
-select.addEventListener('change', function (e) {
+select.addEventListener('change', selectFunction);
+function selectFunction (e) {
     // 使用 switch 來判斷
     switch (e.target.value) {
       case "依上價排序":
@@ -137,7 +136,7 @@ select.addEventListener('change', function (e) {
         });
         renderData(data);
     }
-});
+};
 
 // 透過上下箭頭切換去排序資料
 
