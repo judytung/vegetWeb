@@ -7,7 +7,11 @@ let data = [];
 
 function getData () {
     axios.get(url).then(function (response) {
-        data = response.data;
+        data = response.data.filter((item) => {
+            if (item.作物名稱 !== null ) {
+                return item;
+            } 
+        });
         renderData(data);
     });
 }
